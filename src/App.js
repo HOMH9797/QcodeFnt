@@ -8,6 +8,7 @@ import ClaseProductos from './components/claseAccesorio/ClaseAccesorios';
 import EditarClaseAccesorio from './components/claseAccesorio/EditarClaseAccesorio';
 import SubclaseAccesorios from './components/subclaseAccesorio/SubClaseAccesorio';
 import EditarSubclases from './components/subclaseAccesorio/EditarSubclase';
+import AgregarSubclase from './components/subclaseAccesorio/AgregarSubclase';
 
 function App() {
   const[accesorios, guardarClase]= useState([]);
@@ -18,7 +19,6 @@ function App() {
     if(recargarClases){
       const consultarApi =async()=>{
         const resultado = await axios.get('http://localhost:4500/api/clase-accesorio')
-        const resultado_subclase = await axios.get('')
         guardarClase(resultado.data.accesorios);
       }
       consultarApi();
@@ -51,7 +51,12 @@ function App() {
                           guardarRecargaClases={guardarRecargaClases}
                       />)
               }}></Route>
-
+              <Route exact path="/nueva-subclase/:id"
+                render={props=>{
+                  const idclaseAccesorio = parseInt(props.match.params.id);
+                  return(<AgregarSubclase id={idclaseAccesorio}></AgregarSubclase>)
+                }}
+              ></Route>
               <Route exact path="/subclase-accesorio/:id" 
               render={props=>{
                   const idclaseAccesorio = parseInt(props.match.params.id);

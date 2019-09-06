@@ -19,7 +19,7 @@ function SubclaseAccesorios({ claseobj, history,guardarRecargaClases }) {
             <h1 className="text-center">Subclase de accesorios</h1>
             <button type="button" className="btn text-uppercase btn-danger mr-2"
                 onClick={() => (history.push('/clase-accesorios'))}>volver</button>
-            <Link to={`/nueva-clase`}
+            <Link to={`/nueva-subclase/${id}`}
                 className="btn text-uppercase btn-success mr-2">Nuevo</Link>
 
             <ul className="list-group mt-5">
