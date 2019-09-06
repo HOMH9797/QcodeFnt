@@ -57,8 +57,14 @@ function AgregarClaseAccesorio({history,guardarRecargaClases}){
                         onChange={e=> guardar(e.target.value)}
                     />
                 </div>
-                <input type="submit" className="font-weight-bold text-uppercase mt-5 btn btn-primary btn-block py-3" value="Agregar clase" />
+                <div className="form-group">
+
+                    <input type="submit" className="font-weight-bold text-uppercase mt-2 btn btn-success btn-block py-1" value="Agregar clase" />
+                    <button type="button" className="btn mt-2  py-1 text-uppercase btn-block btn-danger"
+                        onClick={()=> (history.push('/clase-accesorios'))}>CANCELAR</button>                 
+                </div>
             </form>
+            
         </div>
     
     )

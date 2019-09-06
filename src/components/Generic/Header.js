@@ -12,7 +12,7 @@ const Header = () =>(
                     <NavLink to="/clase-accesorios" activeClassName="active" className="nav-link">Clases de accesorios</NavLink>
                 </li>
                 <li className="nav-item">
-                    <NavLink to="/nueva-clase" activeClassName="active" className="nav-link">Nueva clase de accesorio</NavLink>
+                    <NavLink to="/" activeClassName="active" className="nav-link">Informe de tarea</NavLink>
                 </li>
             </ul>
         </div>

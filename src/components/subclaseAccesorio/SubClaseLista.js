@@ -1,16 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { Link, withRouter } from 'react-router-dom';
 
-function ClaseLista({ claseaccesorio, guardarRecargaClases }) {
 
-    const eliminarClaseAccesorio = id => {
-
+function SubClaseLista({ SubClaseAccesorio, nombreClase,guardarRecargaClases,history }) {
+    const eliminarSubClaseAccesorio = id => {
         Swal.fire(
             {
                 title: 'Estas seguro ¿?',
-                text: "Una clase sera eliminada",
+                text: "Una subclase sera eliminada",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -20,17 +19,17 @@ function ClaseLista({ claseaccesorio, guardarRecargaClases }) {
             }).then(async (result) => {
                 if (result.value) {
                     try {
-                        const url = `http://localhost:4500/api/clase-accesorio/${id}`
+                        const url = `http://localhost:4500/api/subclase-accesorio/${id}`
                         const resultado = await axios.delete(url);
 
                         if (resultado.status === 200) {
                             Swal.fire(
                                 'Eliminado !!!',
-                                'Tu clase fue eliminada exitosamente',
+                                'Tu subclase fue eliminada exitosamente',
                                 'success'
                             )
+                            history.push('/clase-accesorios')
                             guardarRecargaClases(true);
-
                         }
                     } catch (error) {
                         Swal.fire({
@@ -45,26 +44,27 @@ function ClaseLista({ claseaccesorio, guardarRecargaClases }) {
 
     return (
         <li className="list-group-item d-flex justify-content-between align-items-center">
+
             <p>
-                {claseaccesorio.id}
+                {SubClaseAccesorio.id}
             </p>
             <p>
-                {claseaccesorio.nombre}
+                {nombreClase}
+            </p>
+            <p>
+                {SubClaseAccesorio.nombre}
             </p>
             <div>
-
-                <Link to={`/subclase-accesorio/${claseaccesorio.id}`}
-                    className="btn btn-info mr-2">Subclases</Link>
-
-                <Link to={`/clase-accesorio/editar/${claseaccesorio.id}`}
-                    className="btn btn-success mr-2">Editar</Link>
-
-                <button type="button" className="btn btn-danger"
-                    onClick={() => eliminarClaseAccesorio(claseaccesorio.id)}
-                >Eliminar &times;</button>
+                <p>
+                    <Link to={`/subclase-editar/${SubClaseAccesorio.id}`}
+                        className="btn btn-success mr-2">Editar</Link>
+                    <button type="button" className="btn btn-danger"
+                        onClick={() => eliminarSubClaseAccesorio(SubClaseAccesorio.id)}
+                    >Eliminar &times;</button>
+                </p>
             </div>
         </li>
     )
 }
 
-export default ClaseLista;
+export default withRouter(SubClaseLista);

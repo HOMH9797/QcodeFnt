@@ -5,17 +5,20 @@ import axios from 'axios';
 import Header from './components/Generic/Header';
 import AgregarClaseProducto from './components/claseAccesorio/AgregarClaseAccesosrio';
 import ClaseProductos from './components/claseAccesorio/ClaseAccesorios';
-import ClaseProducto from './components/claseAccesorio/ClaseAccesorio';
 import EditarClaseAccesorio from './components/claseAccesorio/EditarClaseAccesorio';
+import SubclaseAccesorios from './components/subclaseAccesorio/SubClaseAccesorio';
+import EditarSubclases from './components/subclaseAccesorio/EditarSubclase';
 
 function App() {
   const[accesorios, guardarClase]= useState([]);
+
   const[recargarClases, guardarRecargaClases]= useState(true);
 
   useEffect(()=>{
     if(recargarClases){
       const consultarApi =async()=>{
         const resultado = await axios.get('http://localhost:4500/api/clase-accesorio')
+        const resultado_subclase = await axios.get('')
         guardarClase(resultado.data.accesorios);
       }
       consultarApi();
@@ -43,13 +46,35 @@ function App() {
                       const idClaseAccesorio = parseInt(props.match.params.id);
                       
                       const claseAccesorio = accesorios.filter(accesorio => accesorio.id === idClaseAccesorio);
-                      console.log(claseAccesorio[0])
                       return(<EditarClaseAccesorio 
                           claseaccesorio={claseAccesorio[0]}
                           guardarRecargaClases={guardarRecargaClases}
                       />)
               }}></Route>
-              <Route exact path="/clase-accesorio/:id" component={ClaseProducto}></Route>
+
+              <Route exact path="/subclase-accesorio/:id" 
+              render={props=>{
+                  const idclaseAccesorio = parseInt(props.match.params.id);
+                  const claseobj = accesorios.filter(accesorio => accesorio.id === idclaseAccesorio);
+
+                  return(
+                    <SubclaseAccesorios  
+                    claseobj={claseobj[0]}
+                      guardarRecargaClases={guardarRecargaClases}>
+                    </SubclaseAccesorios>
+                  )
+              }}>
+              </Route>
+              <Route exact path="/subclase-editar/:id"
+                  render={props=>{
+                    const idSub = parseInt(props.match.params.id);
+
+                    return(
+                      <EditarSubclases idsub={idSub} guardarRecargaClases={guardarRecargaClases}></EditarSubclases>
+                    )
+                  }}
+              >
+              </Route>
           </Switch>
         </main>
     </Router>
